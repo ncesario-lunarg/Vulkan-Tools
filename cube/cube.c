@@ -4500,23 +4500,22 @@ void android_main(struct android_app *app) {
     app->onAppCmd = processCommand;
     app->onInputEvent = processInput;
 
-    while (1) {
+    while (!app->destroyRequested) {
         int events;
         struct android_poll_source *source;
-        while (ALooper_pollAll(active ? 0 : -1, NULL, &events, (void **)&source) >= 0) {
-            if (source) {
-                source->process(app, source);
-            }
-
-            if (app->destroyRequested != 0) {
-                demo_cleanup(&demo);
-                return;
-            }
+        const int result = ALooper_pollOnce(active ? 0 : -1, NULL, &events, (void **)&source);
+        if (result == ALOOPER_POLL_ERROR) {
+            ERR_EXIT("ALooper_pollOnce returned an error", "ALooper_pollOnce returned an error");
+        }
+        if (source) {
+            source->process(app, source);
         }
         if (initialized && active) {
             demo_run(&demo);
         }
     }
+
+    demo_cleanup(&demo);
 }
 #else
 int main(int argc, char **argv) {

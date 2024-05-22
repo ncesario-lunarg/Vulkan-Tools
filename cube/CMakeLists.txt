@@ -227,6 +227,9 @@ elseif (ANDROID)
     add_subdirectory(android)
 
     target_link_libraries(vkcube PRIVATE Vulkan::Headers volk::volk_headers)
+
+    include(${CMAKE_CURRENT_LIST_DIR}/apk.cmake)
+    build_apk(vkcube ${CMAKE_CURRENT_LIST_DIR}/android/AndroidManifest.xml ${CMAKE_BINARY_DIR}/out/apk "" "")
 elseif(CMAKE_SYSTEM_NAME MATCHES "Linux|BSD")
     add_executable(vkcube)
     target_sources(vkcube PRIVATE

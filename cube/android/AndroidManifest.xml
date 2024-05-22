@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
-    <uses-sdk android:minSdkVersion="23" android:targetSdkVersion="23"/>
+    <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="34"/>
 
     <!-- This .apk has no Java code itself, so set hasCode to false. -->
     <application android:label="VkCube" android:hasCode="false" android:debuggable='true'>
